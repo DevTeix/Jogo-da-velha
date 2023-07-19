@@ -1,0 +1,57 @@
+def exibir_tabuleiro(tabuleiro):
+    print("---------")
+    for linha in tabuleiro:
+        print("|", end="")
+        for celula in linha:
+            print(celula, end="|")
+        print("\n---------")
+
+def verificar_vitoria(tabuleiro, jogador):
+    # Verifica se alguma das linhas possui três símbolos iguais
+    for linha in tabuleiro:
+        if linha[0] == linha[1] == linha[2] == jogador:
+            return True
+
+    # Verifica se alguma das colunas possui três símbolos iguais
+    for coluna in range(3):
+        if tabuleiro[0][coluna] == tabuleiro[1][coluna] == tabuleiro[2][coluna] == jogador:
+            return True
+
+    # Verifica as diagonais
+    if tabuleiro[0][0] == tabuleiro[1][1] == tabuleiro[2][2] == jogador:
+        return True
+    if tabuleiro[0][2] == tabuleiro[1][1] == tabuleiro[2][0] == jogador:
+        return True
+
+    return False
+
+def jogar_jogo_da_velha():
+    tabuleiro = [[" ", " ", " "],
+                 [" ", " ", " "],
+                 [" ", " ", " "]]
+
+    jogador_atual = "X"
+
+    while True:
+        exibir_tabuleiro(tabuleiro)
+
+        linha = int(input("Digite o número da linha (0, 1 ou 2): "))
+        coluna = int(input("Digite o número da coluna (0, 1 ou 2): "))
+
+        if tabuleiro[linha][coluna] != " ":
+            print("Essa posição já está ocupada. Tente novamente.")
+            continue
+
+        tabuleiro[linha][coluna] = jogador_atual
+
+        if verificar_vitoria(tabuleiro, jogador_atual):
+            exibir_tabuleiro(tabuleiro)
+            print("O jogador", jogador_atual, "venceu!")
+            break
+
+        if jogador_atual == "X":
+            jogador_atual = "O"
+        else:
+            jogador_atual = "X"
+
+jogar_jogo_da_velha()
